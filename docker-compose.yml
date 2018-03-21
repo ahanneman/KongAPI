@@ -30,6 +30,7 @@ services:
     container_name: kong-db
     restart: on-failure
     volumes:
+      - cassandra_data:/var/lib/cassandra
     ports:
       - 9042:9042
     healthcheck:
