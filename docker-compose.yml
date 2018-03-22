@@ -3,6 +3,8 @@ version: '2.1'
 volumes:
   cassandra_data:
     driver: local
+  log_data:
+    driver: local
     
 services:
   consul:
@@ -71,6 +73,8 @@ services:
       - 8443:8443
       - 8001:8001
       - 8444:8444
+    volumes:
+      - log_data:/usr/local/kong/logs
     expose:
       - 8000
       - 8001
@@ -113,6 +117,7 @@ services:
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - log_data:/usr/share/logstash/kong-logs:ro
     ports:
       - "5000:5000"
     environment:
