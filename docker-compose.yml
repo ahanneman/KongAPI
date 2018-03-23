@@ -117,14 +117,20 @@ services:
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
-      - log_data:/usr/share/logstash/kong-logs:ro
     ports:
       - "5000:5000"
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     depends_on:
       - elasticsearch
-
+      
+  filebeat:
+    build:
+      context: filebeat/
+    container_name: filebeat
+    volumes:
+      - log_data:/usr/share/logstash/kong-logs:ro
+     
   kibana:
     build:
       context: kibana/

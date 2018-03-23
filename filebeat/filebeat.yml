@@ -1,0 +1,19 @@
+filebeat:
+ prospectors:
+ -
+ paths:
+ - /../../kong-logs/access.log
+ input_type: access
+ document_type: nginx
+ -
+ paths:
+ - /../../kong-logs/error.log
+ input_type: error
+ document_type: nginx
+ 
+registry_file: /home/fb_registry.filebeat
+ 
+output:
+ logstash:
+ hosts: ["logstash:5044"]
+ worker: 1
